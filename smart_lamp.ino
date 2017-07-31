@@ -73,23 +73,28 @@ void handleMessage(AdafruitIO_Data *data) {
 
   switch (data->value()[0]) {
     case 'g': // green
+    case 'G':
         setColor(0, 255, 0);
         break;
 
     case 'r':  // red
+    case 'R':
         setColor(255, 0, 0);
         break;
 
     case 'b':  // blue
+    case 'B':
         setColor(0, 0, 255);
         break;
 
     case 'w':  // weather
+    case 'W':
         Serial.println("weather not implemented");
         setColor(255, 255, 255);
         break;
 
     case 'o': // orange
+    case 'O':
         setColor(255, 118, 0);
         break;
 
