@@ -17,6 +17,7 @@
 // and any additional configuration needed for WiFi, cellular,
 // or ethernet clients.
 #include "config.h"
+#include "patterns.h"
 
 /************************ Example Starts Here *******************************/
 
