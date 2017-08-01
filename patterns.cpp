@@ -1,6 +1,8 @@
 #include "patterns.h"
+#include <math.h>
 
 #define NUM_BLOCKS 3
+#define PI 3.14159265
 
 void getColors(int red, int green, int blue, colors *lamp)
 {
@@ -27,10 +29,14 @@ void lava_lamp(int hue, int t, colors *lamp)
     /* This function returns a lamp array
      * for a timestep t and a specified hue.
      */
-    lamp_off(lamp);
-
-    for (int i = 0; i < 4; i++) {
-        (*lamp)[i][hue] = ((t + (i*10)) % 255);
+    int new_step;
+    double percent, x, y;
+    for (int i = 0; i < NUM_BLOCKS; i++) {
+        new_step = t + (i*12);
+        percent = (double)new_step / 100.0;
+        x = percent * 2.0 * PI;
+        y = sin(x);
+        (*lamp)[i][hue] = 128 + (int)(127.0 * y);
     }
 }
 

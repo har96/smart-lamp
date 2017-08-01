@@ -35,6 +35,10 @@ colors PINS = { {14, 12, 13},
                 {15, 0, 16},
                 {2, 5, 4} };
 
+colors cur_lamp;
+
+bool do_lava = 1;
+
 void lava(int, int, int, int);
 void setColor(int, int, int);
 void setLamp(colors lamp);
@@ -43,6 +47,9 @@ void setLamp(colors lamp);
 AdafruitIO_Feed *color = io.feed("smart-lamp");
 
 void setup() {
+
+  lamp_off(&cur_lamp);
+  setLamp();
 
   // start the serial connection
   Serial.begin(115200);
@@ -75,6 +82,10 @@ void setup() {
 
 void loop() {
   io.run();
+
+  if (do_lava) {
+    lava(0);
+  }
 }
 
 void handleMessage(AdafruitIO_Data *data) {
@@ -122,37 +133,34 @@ void handleMessage(AdafruitIO_Data *data) {
         Serial.println(data->value());
 
         //setColor(data->toRed(), data->toGreen(), data->toBlue());
-        lava(data->toRed(), data->toGreen(), data->toBlue(), 0);
+        setColor(data->toRed(), data->toGreen(), data->toBlue());
         break;
   }
 }
 
-void lava(int red, int green, int blue, int hue)
+// Adjust boxes to create lava effect
+void lava(int hue)
 {
-  colors lamp;
-  getColors(red, green, blue, &lamp);
 
   uint32_t timestep = millis() / SPEED;
 
-  lava_lamp(hue, timestep, &lamp);
-
-  setLamp(lamp);
+  lava_lamp(hue, timestep, &cur_lamp);
+  setLamp();
 }
 
+// Set all boxes to color
 void setColor(int red, int green, int blue)
 {
-  colors lamp;
-  
-  getColors(red, green, blue, &lamp);
-
-  setLamp(lamp);
+  getColors(red, green, blue, &cur_lamp);
+  setLamp();
 }
 
-void setLamp(colors lamp)
+// Set lamp to boxes
+void setLamp()
 {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      analogWrite(PINS[i][j], lamp[i][j]);
+      analogWrite(PINS[i][j], cur_lamp[i][j]);
     }
   }
 }
