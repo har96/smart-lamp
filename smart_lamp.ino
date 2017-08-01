@@ -126,11 +126,8 @@ void handleMessage(AdafruitIO_Data *data) {
 void setColor(int red, int green, int blue)
 {
   colors lamp;
-  for (int i = 0; i < 3; i++) {
-    lamp[i][0] = red;
-    lamp[i][1] = green;
-    lamp[i][2] = blue;
-  }
+  
+  getColors(red, green, blue, &lamp);
 
   setLamp(lamp);
 }

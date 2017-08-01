@@ -2,6 +2,16 @@
 
 #define NUM_BLOCKS 3
 
+void getColors(int red, int green, int blue, colors *lamp)
+{
+    for (int i = 0; i < 3; i++) {
+        (*lamp)[i][0] = red;
+        (*lamp)[i][1] = green;
+        (*lamp)[i][2] = blue;
+    }
+}
+
+
 void lamp_off(colors *lamp)
 {
     for (int i = 0; i < NUM_BLOCKS; i++) {
@@ -20,7 +30,7 @@ void lava_lamp(int hue, int t, colors *lamp)
     lamp_off(lamp);
 
     for (int i = 0; i < 4; i++) {
-        (*lamp)[i][hue] = ((t*i) % 255);
+        (*lamp)[i][hue] = ((t + (i*10)) % 255);
     }
 }
 
