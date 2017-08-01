@@ -1,3 +1,5 @@
+
+
 // Adafruit IO RGB LED Output Example
 // Tutorial Link: https://learn.adafruit.com/adafruit-io-basics-color
 //
@@ -27,7 +29,12 @@
 #define GREEN_PIN 12
 #define BLUE_PIN  13
 
+colors PINS = { {14, 12, 13},
+                {15, 0, 16},
+                {2, 5, 4} };
+
 void setColor(int, int, int);
+void setLamp(colors lamp);
 
 // set up the 'color' feed
 AdafruitIO_Feed *color = io.feed("smart-lamp");
@@ -118,8 +125,23 @@ void handleMessage(AdafruitIO_Data *data) {
 
 void setColor(int red, int green, int blue)
 {
-  // invert RGB values for common anode LEDs
-  analogWrite(RED_PIN, red);
-  analogWrite(GREEN_PIN, green);
-  analogWrite(BLUE_PIN, blue);
+  colors lamp;
+  for (int i = 0; i < 3; i++) {
+    lamp[i][0] = red;
+    lamp[i][1] = green;
+    lamp[i][2] = blue;
+  }
+
+  setLamp(lamp);
 }
+
+void setLamp(colors lamp)
+{
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      analogWrite(PINS[i][j], lamp[i][j]);
+    }
+  }
+}
+
+
