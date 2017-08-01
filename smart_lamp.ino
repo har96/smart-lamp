@@ -114,6 +114,10 @@ void handleMessage(AdafruitIO_Data *data) {
         setColor(255, 118, 0);
         break;
 
+    case '@': // alarm
+        flash(300, 5000);
+        break;
+
     default:
         // print RGB values and hex value
         Serial.println("Received:");
@@ -129,6 +133,18 @@ void handleMessage(AdafruitIO_Data *data) {
         //setColor(data->toRed(), data->toGreen(), data->toBlue());
         setColor(data->toRed(), data->toGreen(), data->toBlue());
         break;
+  }
+}
+
+void flash(uint32_t flash_length, uint32_t total_time)
+{
+  uint32_t start = millis();
+  while( (millis() - start) < total_time ) {
+    setColor(255, 255, 255);
+    delay(flash_length);
+    lamp_off(&cur_lamp);
+    setLamp();
+    delay(flash_length);
   }
 }
 

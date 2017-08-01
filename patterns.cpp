@@ -4,6 +4,18 @@
 #define NUM_BLOCKS 3
 #define PI 3.14159265
 
+const colors GOOGLE = { 
+  {0, 135, 68},
+  {214, 45, 32},
+  {255, 167, } 
+};
+
+const colors NIGHT = {
+  {100, 10, 0},
+  {150, 20, 0},
+  {150, 20, 0}
+};
+
 void getColors(int red, int green, int blue, colors *lamp)
 {
     for (int i = 0; i < 3; i++) {
