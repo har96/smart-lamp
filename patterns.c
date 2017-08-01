@@ -1,8 +1,10 @@
 #include "patterns.h"
 
+#define NUM_BLOCKS 3
+
 void lamp_off(colors *lamp)
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < NUM_BLOCKS; i++) {
         for (int j = 0; j < 3; j++) {
             (*lamp)[i][j] = 0;
         }
