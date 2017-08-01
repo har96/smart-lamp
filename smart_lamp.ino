@@ -29,10 +29,13 @@
 #define GREEN_PIN 12
 #define BLUE_PIN  13
 
+#define SPEED 100  // Number of milliseconds for each timestep
+
 colors PINS = { {14, 12, 13},
                 {15, 0, 16},
                 {2, 5, 4} };
 
+void lava(int, int, int, int);
 void setColor(int, int, int);
 void setLamp(colors lamp);
 
@@ -118,9 +121,22 @@ void handleMessage(AdafruitIO_Data *data) {
         Serial.print("  - HEX: ");
         Serial.println(data->value());
 
-        setColor(data->toRed(), data->toGreen(), data->toBlue());
+        //setColor(data->toRed(), data->toGreen(), data->toBlue());
+        lava(data->toRed(), data->toGreen(), data->toBlue(), 0);
         break;
   }
+}
+
+void lava(int red, int green, int blue, int hue)
+{
+  colors lamp;
+  getColors(red, green, blue, &lamp);
+
+  uint32_t timestep = millis() / SPEED;
+
+  lava_lamp(hue, timestep, &lamp);
+
+  setLamp(lamp);
 }
 
 void setColor(int red, int green, int blue)
