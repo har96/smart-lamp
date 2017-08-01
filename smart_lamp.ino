@@ -23,12 +23,6 @@
 
 /************************ Example Starts Here *******************************/
 
-// default PWM pins for ESP8266.
-// you should change these to match PWM pins on other platforms.
-#define RED_PIN   14
-#define GREEN_PIN 12
-#define BLUE_PIN  13
-
 #define SPEED 100  // Number of milliseconds for each timestep
 
 colors PINS = { {14, 12, 13},
