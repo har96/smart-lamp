@@ -31,10 +31,11 @@ colors PINS = { {14, 12, 13},
 
 colors cur_lamp;
 
-bool do_lava = 1;
+bool do_lava = 0;
 
 void lava(int, int, int, int);
 void setColor(int, int, int);
+void setColor(const colors);
 void setLamp(colors lamp);
 
 // set up the 'color' feed
@@ -43,7 +44,7 @@ AdafruitIO_Feed *color = io.feed("smart-lamp");
 void setup() {
 
   lamp_off(&cur_lamp);
-  setLamp();
+  setColor(GOOGLE);
 
   // start the serial connection
   Serial.begin(115200);
@@ -78,14 +79,16 @@ void loop() {
   io.run();
 
   if (do_lava) {
-    lava(0);
+    lava(0); // Zero for red
   }
+  setLamp();
 }
 
 void handleMessage(AdafruitIO_Data *data) {
 
   Serial.println("Data recieved:");
   Serial.println(data->value());
+
 
   switch (data->value()[0]) {
     case 'g': // green
@@ -114,8 +117,15 @@ void handleMessage(AdafruitIO_Data *data) {
         setColor(255, 118, 0);
         break;
 
+    case 'n': // night
+    case 'N':
+        setColor(150, 20, 0);
+        do_lava = false;
+        break;
+
     case '@': // alarm
         flash(300, 5000);
+        // TODO then show weather
         break;
 
     default:
@@ -132,6 +142,7 @@ void handleMessage(AdafruitIO_Data *data) {
 
         //setColor(data->toRed(), data->toGreen(), data->toBlue());
         setColor(data->toRed(), data->toGreen(), data->toBlue());
+        do_lava = true;
         break;
   }
 }
@@ -141,6 +152,7 @@ void flash(uint32_t flash_length, uint32_t total_time)
   uint32_t start = millis();
   while( (millis() - start) < total_time ) {
     setColor(255, 255, 255);
+    setLamp();
     delay(flash_length);
     lamp_off(&cur_lamp);
     setLamp();
@@ -155,14 +167,21 @@ void lava(int hue)
   uint32_t timestep = millis() / SPEED;
 
   lava_lamp(hue, timestep, &cur_lamp);
-  setLamp();
 }
 
 // Set all boxes to color
 void setColor(int red, int green, int blue)
 {
   getColors(red, green, blue, &cur_lamp);
-  setLamp();
+}
+
+void setColor(const colors copy)
+{
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      cur_lamp[i][j] = copy[i][j];
+    }
+  }
 }
 
 // Set lamp to boxes
