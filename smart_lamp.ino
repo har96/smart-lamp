@@ -115,6 +115,9 @@ void handleMessage(AdafruitIO_Data *data) {
     flash(300, 5000);
     // TODO then show weather
   }
+  else if (command.startsWith("google")) {
+    setColor(GOOGLE);
+  }
   else {
     setColor(data->toRed(), data->toGreen(), data->toBlue());
   }
