@@ -114,6 +114,7 @@ void handleMessage(AdafruitIO_Data *data) {
   else if (command.startsWith("@")) {
     flash(300, 5000);
     // TODO then show weather
+    setColor(NIGHT);
   }
   else if (command.startsWith("google")) {
     setColor(GOOGLE);
