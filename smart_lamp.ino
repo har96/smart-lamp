@@ -33,10 +33,10 @@ colors cur_lamp;
 
 bool do_lava = 0;
 
-void lava(int, int, int, int);
+void lava(int);
 void setColor(int, int, int);
 void setColor(const colors);
-void setLamp(colors lamp);
+void setLamp();
 
 // set up the 'color' feed
 AdafruitIO_Feed *color = io.feed("smart-lamp");
@@ -89,61 +89,41 @@ void handleMessage(AdafruitIO_Data *data) {
   Serial.println("Data recieved:");
   Serial.println(data->value());
 
+  String command = data->value();
+  command.toLowerCase();
 
-  switch (data->value()[0]) {
-    case 'g': // green
-    case 'G':
-        setColor(0, 255, 0);
-        break;
+  if (command.startsWith("green")) {
+    setColor(0, 255, 0);
+  }
+  else if (command.startsWith("red")) {
+    setColor(255, 0, 0);
+  }
+  else if (command.startsWith("blue")) {
+    setColor(0, 0, 255);
+  }
+  else if (command.startsWith("weather")) {
+    Serial.println("weather not implemented");
+    setColor(255, 255, 255);
+  }
+  else if (command.startsWith("orange")) {
+    setColor(255, 118, 0);
+  }
+  else if (command.startsWith("night")) {
+    setColor(NIGHT);
+  }
+  else if (command.startsWith("@")) {
+    flash(300, 5000);
+    // TODO then show weather
+  }
+  else {
+    setColor(data->toRed(), data->toGreen(), data->toBlue());
+  }
 
-    case 'r':  // red
-    case 'R':
-        setColor(255, 0, 0);
-        break;
-
-    case 'b':  // blue
-    case 'B':
-        setColor(0, 0, 255);
-        break;
-
-    case 'w':  // weather
-    case 'W':
-        Serial.println("weather not implemented");
-        setColor(255, 255, 255);
-        break;
-
-    case 'o': // orange
-    case 'O':
-        setColor(255, 118, 0);
-        break;
-
-    case 'n': // night
-    case 'N':
-        setColor(150, 20, 0);
-        do_lava = false;
-        break;
-
-    case '@': // alarm
-        flash(300, 5000);
-        // TODO then show weather
-        break;
-
-    default:
-        // print RGB values and hex value
-        Serial.println("Received:");
-        Serial.print("  - R: ");
-        Serial.println(data->toRed());
-        Serial.print("  - G: ");
-        Serial.println(data->toGreen());
-        Serial.print("  - B: ");
-        Serial.println(data->toBlue());
-        Serial.print("  - HEX: ");
-        Serial.println(data->value());
-
-        //setColor(data->toRed(), data->toGreen(), data->toBlue());
-        setColor(data->toRed(), data->toGreen(), data->toBlue());
-        do_lava = true;
-        break;
+  if (command.endsWith("lava")) {
+    do_lava = true;
+  }
+  else {
+    do_lava = false;
   }
 }
 
