@@ -43,8 +43,12 @@ AdafruitIO_Feed *color = io.feed("smart-lamp");
 
 void setup() {
 
+  // set analogWrite range for ESP8266
+#ifdef ESP8266
+  analogWriteRange(255);
+#endif
+
   lamp_off(&cur_lamp);
-  setColor(GOOGLE);
 
   // start the serial connection
   Serial.begin(115200);
@@ -61,18 +65,25 @@ void setup() {
   // wait for a connection
   while(io.status() < AIO_CONNECTED) {
     Serial.print(".");
-    delay(500);
+    
+    setColor(100, 100, 100);
+    setLamp();
+    
+    delay(400);
+    
+    lamp_off(&cur_lamp);
+    setLamp();
+    delay(100);
   }
 
   // we are connected
   Serial.println();
   Serial.println(io.statusText());
 
-  // set analogWrite range for ESP8266
-  #ifdef ESP8266
-    analogWriteRange(255);
-  #endif
-
+  setColor(0, 255, 0); // Flash green
+  setLamp();
+  delay(500);
+  setColor(GOOGLE);
 }
 
 void loop() {

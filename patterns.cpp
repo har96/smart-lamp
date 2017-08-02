@@ -39,7 +39,7 @@ void lamp_off(colors *lamp)
 void lava_lamp(int hue, int t, colors *lamp)
 {
     /* This function returns a lamp array
-     * for a timestep t and a specified hue.
+     * for a timestep t and a specified hue index.
      */
     int new_step;
     double percent, x, y;
