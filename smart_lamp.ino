@@ -20,6 +20,7 @@
 // or ethernet clients.
 #include "config.h"
 #include "patterns.h"
+#include "weather.h"
 
 /************************ Example Starts Here *******************************/
 
@@ -113,8 +114,15 @@ void handleMessage(AdafruitIO_Data *data) {
     setColor(0, 0, 255);
   }
   else if (command.startsWith("weather")) {
-    Serial.println("weather not implemented");
+    Serial.println("weather not implemented.\n------------");
     setColor(255, 255, 255);
+
+    String days[3];
+    getWeatherData(days);
+
+    for (int i= 0; i < 3; i++) {
+      Serial.println(days[i]);
+    }
   }
   else if (command.startsWith("orange")) {
     setColor(255, 118, 0);
