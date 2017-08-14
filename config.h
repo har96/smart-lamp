@@ -15,8 +15,8 @@
 //   - Feather M0 WiFi -> https://www.adafruit.com/products/3010
 //   - Feather WICED -> https://www.adafruit.com/products/3056
 
-#define WIFI_SSID    "Verizon-291LVW-F964" // "T-Mobile Broadband96"
-#define WIFI_PASS    ""  // "3miDDleware"
+#define WIFI_SSID    "T-Mobile Broadband96"
+#define WIFI_PASS    "3miDDleware"
 
 // comment out the following two lines if you are using fona or ethernet
 #include "AdafruitIO_WiFi.h"

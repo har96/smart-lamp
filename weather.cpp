@@ -56,7 +56,7 @@ void getWeatherData(String *days)
 
     Serial.println("Fixing to write array");
     for (int i = 0; i < 3; i++) {
-      days[i] = forecast[i]["conditions"].asString();
+      days[i] = forecast[i]["icon"].asString();
     }
 }
 

@@ -31,8 +31,10 @@ colors PINS = { {14, 12, 13},
                 {2, 5, 4} };
 
 colors cur_lamp;
+String weather[3];
 
 bool do_lava = 0;
+bool do_weather = false;
 
 void lava(int);
 void setColor(int, int, int);
@@ -93,6 +95,41 @@ void loop() {
   if (do_lava) {
     lava(0); // Zero for red
   }
+  else if (do_weather) {
+    uint32_t t = millis() / SPEED;
+
+    for (int i = 0; i < 3; i++) {
+      
+      String day = weather[i];
+      if (day.endsWith("rain")) {
+         int blue = (t%3) * 100; // Steps every tenth of a second
+         
+         cur_lamp[i][0] = 10;
+         cur_lamp[i][1] = 10;
+         cur_lamp[i][2] = blue;
+      }
+      else if (day.equals("clear")) {
+        cur_lamp[i][0] = 255;
+        cur_lamp[i][1] = 160;
+        cur_lamp[i][2] = 0;
+      }
+      else if (day.endsWith("tstorms")) {
+        int red_green = (t%3) * 100; // Steps every tenth of a second
+
+        cur_lamp[i][0] = red_green;
+        cur_lamp[i][1] = red_green;
+        cur_lamp[i][2] = 10;
+      }
+      else {
+        cur_lamp[i][0] = 255;
+        cur_lamp[i][1] = 0;
+        cur_lamp[i][2] = 0;
+      }
+    }
+    //display_weather(weather, timestep, &cur_lamp)
+  }
+
+  
   setLamp();
 }
 
@@ -114,15 +151,10 @@ void handleMessage(AdafruitIO_Data *data) {
     setColor(0, 0, 255);
   }
   else if (command.startsWith("weather")) {
-    Serial.println("weather not implemented.\n------------");
     setColor(255, 255, 255);
 
-    String days[3];
-    getWeatherData(days);
-
-    for (int i= 0; i < 3; i++) {
-      Serial.println(days[i]);
-    }
+    getWeatherData(weather);
+    do_weather = true;
   }
   else if (command.startsWith("orange")) {
     setColor(255, 118, 0);
@@ -176,6 +208,7 @@ void lava(int hue)
 void setColor(int red, int green, int blue)
 {
   getColors(red, green, blue, &cur_lamp);
+  do_weather = false;
 }
 
 void setColor(const colors copy)
@@ -185,6 +218,7 @@ void setColor(const colors copy)
       cur_lamp[i][j] = copy[i][j];
     }
   }
+  do_weather = false;
 }
 
 // Set lamp to boxes
