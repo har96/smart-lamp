@@ -18,6 +18,12 @@ const colors NIGHT = {
   {150, 20, 0}
 };
 
+const colors RGB = {
+  {255, 0, 0},
+  {0, 255, 0},
+  {0, 0, 255}
+};
+
 void getColors(int red, int green, int blue, colors *lamp)
 {
     for (int i = 0; i < 3; i++) {

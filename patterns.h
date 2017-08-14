@@ -7,6 +7,7 @@ typedef int colors[NUM_BLOCKS][3];
 
 extern const colors GOOGLE;
 extern const colors NIGHT;
+extern const colors RGB;
 
 //void display_weather(String *, int, colors *);
 void getColors(int, int, int, colors *);

@@ -170,6 +170,9 @@ void handleMessage(AdafruitIO_Data *data) {
   else if (command.startsWith("google")) {
     setColor(GOOGLE);
   }
+  else if (command.startsWith("colors")) {
+    setColor(RGB);
+  }
   else {
     setColor(data->toRed(), data->toGreen(), data->toBlue());
   }
