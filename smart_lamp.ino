@@ -59,6 +59,9 @@ void setup() {
   // wait for serial monitor to open
   while(! Serial);
 
+  Serial.print("Mac address: ");
+  Serial.println(WiFi.macAddress());
+
   // connect to io.adafruit.com
   Serial.print("Connecting to Adafruit IO");
   io.connect();
@@ -172,6 +175,9 @@ void handleMessage(AdafruitIO_Data *data) {
   }
   else if (command.startsWith("colors")) {
     setColor(RGB);
+  }
+  else if (command.startsWith("off")) {
+    setColor(0, 0, 0);
   }
   else {
     setColor(data->toRed(), data->toGreen(), data->toBlue());
