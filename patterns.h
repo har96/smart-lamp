@@ -3,7 +3,7 @@
 
 #define NUM_BLOCKS 3
 
-typedef int colors[NUM_BLOCKS][3];
+typedef uint8_t colors[NUM_BLOCKS][3];
 
 extern const colors GOOGLE;
 extern const colors NIGHT;
