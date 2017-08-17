@@ -33,34 +33,6 @@ void getColors(int red, int green, int blue, colors *lamp)
     }
 }
 
-/*void display_weather(String *days, int t, colors *lamp)
-{
-    for (int i = 0; i < 3; i++) {
-      
-      String day = days[i];
-      if (day.endsWith("rain")) {
-         int blue = (t%3) * 100; // Steps every tenth of a second
-         
-         lamp[i][0] = 10;
-         lamp[i][1] = 10;
-         lamp[i][2] = blue;
-      }
-      else if (day.equals("clear")) {
-        lamp[i][0] = 255;
-        lamp[i][1] = 160;
-        lamp[i][2] = 10;
-      }
-      else if (day.endsWith("tstorms")) {
-        int blue = (t%3) * 100; // Steps every tenth of a second
-        int red_green = (255 - blue);
-
-        lamp[i][0] = red_green;
-        lamp[i][1] = red_green;
-        lamp[i][2] = blue;
-      }
-    }
-}*/
-
 void lamp_off(colors *lamp)
 {
     for (int i = 0; i < NUM_BLOCKS; i++) {
