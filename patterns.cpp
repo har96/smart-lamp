@@ -59,19 +59,20 @@ void lava_lamp(int hue, int t, colors *lamp)
     }
 }
 
-void binary(uint8_t num, colors *lamp)
+void binary(char num, colors *lamp)
 {
   if (num > 7) {
-    Serial.println("Tried to display binary number greater than 7");
     return;
   }
 
   for (int i = 2; i >= 0; i--) {
     bool bt = num % 2;
     if (bt) {
-      lamp[i][0] = lamp[i][1] = lamp[i][2] = 255;
+      (*lamp)[i][0] = (*lamp)[i][1] = (*lamp)[i][2] = 255;
     }
-    else lamp[i][0] = lamp[i][1] = lamp[i][2] = 0;
+    else {
+      (*lamp)[i][0] = (*lamp)[i][1] = (*lamp)[i][2] = 0;
+    }
 
     num /= 2;
   }
