@@ -123,6 +123,11 @@ void loop() {
         cur_lamp[i][1] = red_green;
         cur_lamp[i][2] = 10;
       }
+      else if (day.endsWith("cloudy")) {
+        cur_lamp[i][0] = 100;
+        cur_lamp[i][1] = 90;
+        cur_lamp[i][2] = 120;
+      }
       else {
         cur_lamp[i][0] = 255;
         cur_lamp[i][1] = 0;
