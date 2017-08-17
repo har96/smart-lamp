@@ -13,6 +13,7 @@ extern const colors RGB;
 void getColors(int, int, int, colors *);
 void lamp_off(colors *lamp);
 void lava_lamp(int hue, int t, colors *lamp);
+void binary(uint8_t num, colors *);
 
 
 #endif

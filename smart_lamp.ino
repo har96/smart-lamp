@@ -134,7 +134,6 @@ void loop() {
         cur_lamp[i][2] = 0;
       }
     }
-    //display_weather(weather, timestep, &cur_lamp)
   }
 
   
