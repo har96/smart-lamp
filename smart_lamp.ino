@@ -24,7 +24,8 @@
 #include "config.h"
 #include "patterns.h"
 #include "weather.h"
-#include "WiFiUdp.h"
+#include <WiFiUdp.h>
+#include <ESP8266WiFi.h>
 
 /************************ Example Starts Here *******************************/
 
@@ -58,7 +59,6 @@ void setLamp();
 
 // set up the 'color' feed
 AdafruitIO_Feed *color = io.feed("smart-lamp");
-
 
 
 void setup() {
@@ -101,6 +101,7 @@ void setup() {
     i++;
   }
 
+
   // we are connected
   Serial.println();
   Serial.println(io.statusText());
@@ -111,6 +112,8 @@ void setup() {
   setColor(GOOGLE);
 
   Udp.begin(localPort);
+  setSyncProvider(getNtpTime);
+  setSyncInterval(300);
 }
 
 void loop() {
@@ -121,7 +124,7 @@ void loop() {
   }
   else if (do_time) {
     char minutes_ten = minute(now())/10;
-    //Serial.printf("Minutes: %d\n", minutes_ten);
+    Serial.printf("Minutes: %d\n", minutes_ten);
     binary(minutes_ten, &cur_lamp);
   }
   else if (do_weather) {
