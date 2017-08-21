@@ -2,7 +2,6 @@
 #include "weather.h"
 #include <ESP8266HTTPClient.h>
 
-
 void getWeatherData(String *days)
 {
     HTTPClient http;

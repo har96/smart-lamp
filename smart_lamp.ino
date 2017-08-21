@@ -129,40 +129,7 @@ void loop() {
   }
   else if (do_weather) {
     uint32_t t = millis() / SPEED;
-
-    for (int i = 0; i < 3; i++) {
-      
-      String day = weather[i];
-      if (day.endsWith("rain")) {
-         int blue = (t%3) * 100; // Steps every tenth of a second
-         
-         cur_lamp[i][0] = 10;
-         cur_lamp[i][1] = 10;
-         cur_lamp[i][2] = blue;
-      }
-      else if (day.equals("clear")) {
-        cur_lamp[i][0] = 255;
-        cur_lamp[i][1] = 160;
-        cur_lamp[i][2] = 0;
-      }
-      else if (day.endsWith("tstorms")) {
-        int red_green = (t%3) * 100; // Steps every tenth of a second
-
-        cur_lamp[i][0] = red_green;
-        cur_lamp[i][1] = red_green;
-        cur_lamp[i][2] = 10;
-      }
-      else if (day.endsWith("cloudy")) {
-        cur_lamp[i][0] = 100;
-        cur_lamp[i][1] = 90;
-        cur_lamp[i][2] = 120;
-      }
-      else {
-        cur_lamp[i][0] = 255;
-        cur_lamp[i][1] = 0;
-        cur_lamp[i][2] = 0;
-      }
-    }
+    weatherPattern(t, weather, &cur_lamp);
   }
 
   
