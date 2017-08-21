@@ -86,7 +86,7 @@ void setup() {
   color->onMessage(handleMessage);
 
   // wait for a connection
-  char i = 1;
+  byte i = 1;
   while(io.status() < AIO_CONNECTED) {
     Serial.print(".");
     
@@ -123,7 +123,7 @@ void loop() {
     lava(0); // Zero for red
   }
   else if (do_time) {
-    char minutes_ten = minute(now())/10;
+    byte minutes_ten = minute(now())/10;
     Serial.printf("Minutes: %d\n", minutes_ten);
     binary(minutes_ten, &cur_lamp);
   }

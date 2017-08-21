@@ -60,7 +60,7 @@ void lava_lamp(int hue, int t, colors *lamp)
     }
 }
 
-void binary(char num, colors *lamp)
+void binary(byte num, colors *lamp)
 {
   if (num > 7) {
     return;
