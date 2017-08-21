@@ -82,10 +82,17 @@ void binary(byte num, colors *lamp)
 void weatherPattern(uint32_t t, String *weather, colors *cur_lamp)
 {
    for (int i = 0; i < 3; i++) {
-      
       String day = weather[i];
+
+      // Slow down time if there is just a chance in forecast
+      uint32_t new_t;
+      if (day.startsWith("chance")) {
+        new_t = t/4;
+      }
+      else new_t = t;
+
       if (day.endsWith("rain")) {
-         int blue = (t%3) * 100; // Steps every tenth of a second
+         int blue = (new_t%3) * 100; // Steps every tenth of a second
          
          (*cur_lamp)[i][0] = 10;
          (*cur_lamp)[i][1] = 10;
@@ -97,7 +104,7 @@ void weatherPattern(uint32_t t, String *weather, colors *cur_lamp)
         (*cur_lamp)[i][2] = 0;
       }
       else if (day.endsWith("tstorms")) {
-        int red_green = (t%3) * 100; // Steps every tenth of a second
+        int red_green = (new_t%3) * 100; // Steps every tenth of a second
 
         (*cur_lamp)[i][0] = red_green;
         (*cur_lamp)[i][1] = red_green;
