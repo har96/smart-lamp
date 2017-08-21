@@ -169,10 +169,9 @@ void handleMessage(AdafruitIO_Data *data) {
   else if (command.startsWith("@")) {
     flash(300, 5000);
     
-    // Then show weather
-    getWeatherData(weather);
-    do_weather = true;
-    do_time = false;
+    // Then show time
+    do_time = true;
+    do_weather = false;
   }
   else if (command.startsWith("google")) {
     setColor(GOOGLE);
