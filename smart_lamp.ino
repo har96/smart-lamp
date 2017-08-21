@@ -110,7 +110,7 @@ void setup() {
   setColor(0, 255, 0); // Flash green
   setLamp();
   delay(500);
-  setColor(GOOGLE);
+  setColor(RGB);
 
   Udp.begin(localPort);
   setSyncProvider(getNtpTime);
