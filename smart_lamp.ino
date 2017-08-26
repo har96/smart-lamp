@@ -42,6 +42,7 @@ String weather[3];
 bool do_lava = 0;
 bool do_weather = false;
 bool do_time = false;
+bool do_morse = false;
 
 static const char ntpServerName[] = "us.pool.ntp.org";
 const int timeZone = -6;
@@ -49,6 +50,8 @@ const int timeZone = -6;
 
 WiFiUDP Udp;
 unsigned int localPort = 8888;  // local port to listen for UDP packets
+
+LampMorseSender sender(&cur_lamp);
 
 time_t getNtpTime();
 void sendNTPpacket(IPAddress &address);
@@ -116,6 +119,10 @@ void setup() {
   setSyncProvider(getNtpTime);
   setSyncInterval(300);
 
+  // Morse
+
+  sender.setup();
+
   // ------- ArduinoOTA -----------
   ArduinoOTA.onStart([]() {
     Serial.println("Start");
@@ -153,6 +160,11 @@ void loop() {
   else if (do_weather) {
     uint32_t t = millis() / SPEED;
     weatherPattern(t, weather, &cur_lamp);
+  }
+  else if (do_morse) {
+    if (!sender.continueSending()) {
+      do_morse = false;
+    }
   }
 
   
@@ -209,6 +221,10 @@ void handleMessage(AdafruitIO_Data *data) {
     do_time = true;
     do_weather = false;
   }
+  else if (command.startsWith("morse")) {
+    do_morse = true;
+    sender.setMessage(String("What hath God wrought"));
+    sender.startSending();
   else {
     setColor(data->toRed(), data->toGreen(), data->toBlue());
   }

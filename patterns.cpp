@@ -123,4 +123,10 @@ void weatherPattern(uint32_t t, String *weather, colors *cur_lamp)
    }
 }
 
-
+void LampMorseSender::setOn() { binary(7, cur_lamp); }
+void LampMorseSender::setOff() { lamp_off(cur_lamp); }
+LampMorseSender::LampMorseSender(colors *lamp, float wpm)
+{
+    MorseSender(0, wpm);
+    cur_lamp= = lamp;
+}
